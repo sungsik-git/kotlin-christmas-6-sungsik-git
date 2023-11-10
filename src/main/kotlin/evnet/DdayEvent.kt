@@ -12,6 +12,7 @@ class DdayEvent(private val day: Int) {
     init {
         if (day >= 1 && day <= 25) onTarget = true
     }
+
     fun applyDdayEvent(): Int {
         if (onTarget) {
             discount += DEFAULT_DISCOUNT + ((day - 1) * DAILY_ADDITIONAL_DISCOUNT)

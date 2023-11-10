@@ -1,0 +1,5 @@
+package reserve
+
+class MenuReserve {
+
+}

@@ -1,0 +1,4 @@
+package reserve
+
+class VisitDateReserve {
+}
