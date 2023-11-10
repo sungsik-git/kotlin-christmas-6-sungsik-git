@@ -1,5 +1,7 @@
 package christmas
 
+import evnet.ApplyEvent
+
 fun main() {
-    TODO("프로그램 구현")
+    ApplyEvent(25).test()
 }
