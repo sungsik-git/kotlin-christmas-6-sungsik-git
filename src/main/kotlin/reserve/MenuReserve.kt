@@ -1,5 +1,0 @@
-package reserve
-
-class MenuReserve {
-
-}

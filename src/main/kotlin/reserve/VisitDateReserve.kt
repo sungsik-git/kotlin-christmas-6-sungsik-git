@@ -1,4 +1,0 @@
-package reserve
-
-class VisitDateReserve {
-}
