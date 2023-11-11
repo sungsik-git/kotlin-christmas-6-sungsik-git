@@ -14,6 +14,8 @@ class InputValidate {
         checkOrderMenuInMenuName(input)
         checkOrderMenuCount(input)
         checkSameMenuName(input)
+        checkOrderMenuFormat(input)
+        checkOrderCategoryOnlyDrink(input)
     }
 
     private fun checkVisitDayRange(input: Int) {
@@ -34,9 +36,8 @@ class InputValidate {
             throw IllegalArgumentException(ErrorMessage.INVALID_ORDER_MESSAGE.message)
     }
 
-    private fun checkOrderMenuCount(input: List<String>) {
-        println(input)
-        if(input.all { !it.contains("-")} )
+    private fun checkOrderMenuFormat(input: List<String>) {
+        if (input.all { !it.contains("-") })
             throw IllegalArgumentException(ErrorMessage.INVALID_ORDER_MESSAGE.message)
     }
 
@@ -45,6 +46,30 @@ class InputValidate {
         val removeSameOrderMenuName = orderMenuNames.distinct()
 
         if (orderMenuNames.size != removeSameOrderMenuName.size)
+            throw IllegalArgumentException(ErrorMessage.INVALID_ORDER_MESSAGE.message)
+    }
+
+    private fun checkOrderMenuCount(input: List<String>) {
+        val orderMenuCounts = DivideOrder(input).getOrderMenuAmount()
+
+        for (orderMenuCount in orderMenuCounts) {
+            if (orderMenuCount.toInt() < 1)
+                throw IllegalArgumentException(ErrorMessage.INVALID_ORDER_MESSAGE.message)
+        }
+    }
+
+    private fun checkOrderCategoryOnlyDrink(input: List<String>) {
+        var orderMenuNames = DivideOrder(input).getOrderMenuNames()
+        var orderCategorys = mutableListOf<String>()
+
+        for (orderMenuName in orderMenuNames) {
+            val categoryName = MenuName.categoryFromName(orderMenuName)
+            if (categoryName != null) {
+                orderCategorys.add(categoryName)
+            }
+        }
+
+        if(orderCategorys.all { it == "DRINK" })
             throw IllegalArgumentException(ErrorMessage.INVALID_ORDER_MESSAGE.message)
     }
 }
