@@ -12,6 +12,8 @@ class InputValidate {
 
     fun validateOfMenuName(input: List<String>) {
         checkOrderMenuInMenuName(input)
+        checkOrderMenuCount(input)
+        checkSameMenuName(input)
     }
 
     private fun checkVisitDayRange(input: Int) {
@@ -29,6 +31,20 @@ class InputValidate {
         }
 
         if (!checkMenuName)
+            throw IllegalArgumentException(ErrorMessage.INVALID_ORDER_MESSAGE.message)
+    }
+
+    private fun checkOrderMenuCount(input: List<String>) {
+        println(input)
+        if(input.all { !it.contains("-")} )
+            throw IllegalArgumentException(ErrorMessage.INVALID_ORDER_MESSAGE.message)
+    }
+
+    private fun checkSameMenuName(input: List<String>) {
+        val orderMenuNames = DivideOrder(input).getOrderMenuNames()
+        val removeSameOrderMenuName = orderMenuNames.distinct()
+
+        if (orderMenuNames.size != removeSameOrderMenuName.size)
             throw IllegalArgumentException(ErrorMessage.INVALID_ORDER_MESSAGE.message)
     }
 }

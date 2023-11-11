@@ -3,13 +3,12 @@ package transformation
 class DivideOrder (private val input: List<String>) {
 
     fun getOrderMenuNames(): List<String>{
-        val menus = input.map { it.split("-").first() }
-        return menus
+        return input.map { it.split("-").first() }
     }
 
-    fun getOrderMenuAmount() : List<String>{
-        val amounts = input.map { it.split("-").last() }
-        return amounts
+    fun getOrderMenuAmount(): List<String> {
+        return input.map { it.split("-").last() }
     }
+
 
 }
