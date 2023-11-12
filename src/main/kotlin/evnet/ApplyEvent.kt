@@ -11,11 +11,16 @@ class ApplyEvent (private val visitDay: Int, private val orderMenus: List<String
         val specialEvent = SpecialEvent(dayOfWeeks).applySpecialEvent()
         val rewardEvent = RewardEvent(orderMenus).applyRewardEvent()
 
+        val discount = dDayEvent + weekdayEvent + weekendEvent + specialEvent + rewardEvent
+        println(discount)
+        val badgeEvent = BadgeEvent().applyBadgeEvent(discount)
+
         println("visitDayOfWeek : $dayOfWeeks")
         println("dDayEvent : $dDayEvent")
         println("weekdayEvent : $weekdayEvent")
         println("weekendEvent : $weekendEvent")
         println("specialEvent : $specialEvent")
         println("rewardEvent : $rewardEvent")
+        println("badgeEvent : $badgeEvent")
     }
 }
