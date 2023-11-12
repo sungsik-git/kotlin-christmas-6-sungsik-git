@@ -20,9 +20,9 @@ class ConversionName() {
         var orderPrices = mutableListOf<Int>()
 
         for (orderMenuName in orderMenuNames) {
-            val categoryName = MenuName.priceForName(orderMenuName)
-            if (categoryName != null) {
-                orderPrices.add(categoryName)
+            val menuPrice = MenuName.priceForName(orderMenuName)
+            if (menuPrice != null) {
+                orderPrices.add(menuPrice)
             }
         }
         return orderPrices
