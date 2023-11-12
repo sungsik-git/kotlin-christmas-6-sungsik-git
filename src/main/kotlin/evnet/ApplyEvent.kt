@@ -1,9 +1,11 @@
 package evnet
 
+import transformation.CalculateInOrder
 import transformation.VisitDayOfWeek
 
 class ApplyEvent (private val visitDay: Int, private val orderMenus: List<String>){
-    fun test(){
+
+    fun printEvent(){
         val dDayEvent = DdayEvent(visitDay).applyDdayEvent()
         val dayOfWeeks = VisitDayOfWeek(visitDay).transformDayOfWeek()
         val weekdayEvent = WeekdayEvent(dayOfWeeks, orderMenus).applyWeekdayEvent()
@@ -12,7 +14,7 @@ class ApplyEvent (private val visitDay: Int, private val orderMenus: List<String
         val rewardEvent = RewardEvent(orderMenus).applyRewardEvent()
 
         val discount = dDayEvent + weekdayEvent + weekendEvent + specialEvent + rewardEvent
-        println(discount)
+        println("discount : $discount")
         val badgeEvent = BadgeEvent().applyBadgeEvent(discount)
 
         println("visitDayOfWeek : $dayOfWeeks")

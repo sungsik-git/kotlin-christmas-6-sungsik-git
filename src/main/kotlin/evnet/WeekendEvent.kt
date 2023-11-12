@@ -1,6 +1,6 @@
 package evnet
 
-import transformation.ConversionName
+import transformation.ConversionByName
 import transformation.DivideOrder
 
 class WeekendEvent (day: String, input: List<String>) {
@@ -27,7 +27,7 @@ class WeekendEvent (day: String, input: List<String>) {
 
     private fun amountOfMainInOrder(input: List<String>) :Int{
         val orderMenuNames = DivideOrder(input).getOrderMenuNames()
-        val orderMenuCategorys = ConversionName().nameToCategory(orderMenuNames)
+        val orderMenuCategorys = ConversionByName().nameToCategory(orderMenuNames)
         val indexs = mutableListOf<Int>()
 
 

@@ -2,7 +2,7 @@ package transformation
 
 import userView.MenuName
 
-class ConversionName() {
+class ConversionByName() {
 
     fun nameToCategory(orderMenuNames: List<String>) : MutableList<String>{
         var orderCategorys = mutableListOf<String>()

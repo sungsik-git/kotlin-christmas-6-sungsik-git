@@ -37,7 +37,6 @@ class InputView {
                 println(e.message)
             }
         }
-
         return orderMenus
     }
 }

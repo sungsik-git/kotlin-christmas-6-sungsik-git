@@ -1,6 +1,6 @@
 package validate
 
-import transformation.ConversionName
+import transformation.ConversionByName
 import transformation.DivideOrder
 import userView.ErrorMessage
 import userView.MenuName
@@ -51,17 +51,17 @@ class InputValidate {
     }
 
     private fun checkOrderMenuCount(input: List<String>) {
-        val orderMenuCounts = DivideOrder(input).getOrderMenuAmount()
+        val orderMenuAmounts = DivideOrder(input).getOrderMenuAmount()
 
-        for (orderMenuCount in orderMenuCounts) {
-            if (orderMenuCount.toInt() < 1)
+        for (orderMenuAmount in orderMenuAmounts) {
+            if (orderMenuAmount < 1)
                 throw IllegalArgumentException(ErrorMessage.INVALID_ORDER_MESSAGE.message)
         }
     }
 
     private fun checkOrderCategoryOnlyDrink(input: List<String>) {
         var orderMenuNames = DivideOrder(input).getOrderMenuNames()
-        var orderCategorys = ConversionName().nameToCategory(orderMenuNames)
+        var orderCategorys = ConversionByName().nameToCategory(orderMenuNames)
 
         if(orderCategorys.all { it == "DRINK" })
             throw IllegalArgumentException(ErrorMessage.INVALID_ORDER_MESSAGE.message)
