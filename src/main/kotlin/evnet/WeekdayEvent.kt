@@ -5,7 +5,7 @@ import transformation.DivideOrder
 
 class WeekdayEvent (day: String, input: List<String>){
     companion object{
-        val weekDays = listOf("SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY")
+        val weekdays = listOf("SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY")
     }
 
     private var onTarget = false
@@ -13,7 +13,7 @@ class WeekdayEvent (day: String, input: List<String>){
     private var totalDessertAmount = 0
 
     init {
-        if(weekDays.contains(day) && amountOfDessertInOrder(input) != 0){
+        if(weekdays.contains(day) && amountOfDessertInOrder(input) != 0){
             onTarget = true
         }
     }
@@ -25,7 +25,7 @@ class WeekdayEvent (day: String, input: List<String>){
         return discount
     }
 
-    fun amountOfDessertInOrder(input: List<String>) :Int{
+    private fun amountOfDessertInOrder(input: List<String>) :Int{
         val orderMenuNames = DivideOrder(input).getOrderMenuNames()
         val orderMenuCategorys = ConversionName().nameToCategory(orderMenuNames)
         val indexs = mutableListOf<Int>()
@@ -40,7 +40,7 @@ class WeekdayEvent (day: String, input: List<String>){
         return totalDessertAmount
     }
 
-    fun searchDessertInCategory(input: List<String>, indexs: MutableList<Int>) : Int{
+    private fun searchDessertInCategory(input: List<String>, indexs: MutableList<Int>) : Int{
         val orderMenuAmounts = DivideOrder(input).getOrderMenuAmount()
         var totalDessertAmount = 0
 
