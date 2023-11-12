@@ -9,6 +9,6 @@ class UserOrder {
         var visitDay = inputView.readDate()
         var orderMenus = inputView.readMenu()
 
-        OutputView().printOrderDetail(visitDay,orderMenus)
+        OutputView().printAll(visitDay,orderMenus)
     }
 }

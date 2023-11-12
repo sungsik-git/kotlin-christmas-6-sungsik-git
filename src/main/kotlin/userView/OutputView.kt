@@ -6,16 +6,25 @@ import evnet.SpecialEvent
 import evnet.WeekdayEvent
 import evnet.WeekendEvent
 import transformation.CalculateInOrder
+import transformation.DivideOrder
 import transformation.VisitDayOfWeek
 
 class OutputView() {
-
-    fun printMenu() {
+    fun printAll(day: Int, input: List<String>){
+        printMenu(input)
+        printOrderDetail(day,input)
+    }
+    private fun printMenu(input: List<String>) {
         println("<주문 메뉴>")
-        // ...
+        val orderNames = DivideOrder(input).getOrderMenuNames()
+        val orderAmounts = DivideOrder(input).getOrderMenuAmount()
+
+        for (index in 0 until orderAmounts.size){
+            println("${orderNames[index]} ${orderAmounts[index]}개")
+        }
     }
 
-    fun printOrderDetail(day: Int, input: List<String>){
+    private fun printOrderDetail(day: Int, input: List<String>){
         val totalPrice = CalculateInOrder().TotalPriceInOrder(input)
 
         println("<혜택내역>")

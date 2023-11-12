@@ -6,7 +6,7 @@ class CalculateInOrder {
         val orderMenuNames = DivideOrder(input).getOrderMenuNames()
         val orderMenuPrices = ConversionByName().nameToPrice(orderMenuNames)
         var totalPrice = 0
-        for (index in 0 until orderMenuAmount.size){
+        for (index in 0 until orderMenuPrices.size){
             totalPrice += orderMenuAmount[index] * orderMenuPrices[index]
         }
         return totalPrice
