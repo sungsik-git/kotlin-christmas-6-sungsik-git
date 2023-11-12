@@ -25,5 +25,8 @@ enum class MenuName (
     companion object {
         fun categoryFromName(name: String): String? =
             values().find { it.menuName == name }?.category
+
+        fun priceForName(name: String) : Int? =
+            values().find { it.menuName == name }?.price
     }
 }

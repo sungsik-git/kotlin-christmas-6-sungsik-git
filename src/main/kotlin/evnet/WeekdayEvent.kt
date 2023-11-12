@@ -1,5 +1,7 @@
 package evnet
 
+import transformation.DivideOrder
+
 class WeekdayEvent (day: String, menus: List<String>){
     companion object{
         val weekDays = listOf("SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY")
@@ -13,6 +15,8 @@ class WeekdayEvent (day: String, menus: List<String>){
             onTarget = true
         }
 
+        val orderMenuNames = DivideOrder(menus).getOrderMenuNames()
+        val orderMenuCategorys = orderMenuNames
     }
 
     fun applyWeekdayEvent() : Int{
