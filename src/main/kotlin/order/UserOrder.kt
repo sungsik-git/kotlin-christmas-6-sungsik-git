@@ -1,7 +1,7 @@
 package order
 
-import evnet.ApplyEvent
 import userView.InputView
+import userView.OutputView
 
 class UserOrder {
     var inputView = InputView()
@@ -9,6 +9,6 @@ class UserOrder {
         var visitDay = inputView.readDate()
         var orderMenus = inputView.readMenu()
 
-        ApplyEvent(visitDay, orderMenus).printEvent()
+        OutputView().printOrderDetail(visitDay,orderMenus)
     }
 }
