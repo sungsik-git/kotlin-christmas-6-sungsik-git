@@ -12,7 +12,9 @@ import transformation.VisitDayOfWeek
 class OutputView() {
     fun printAll(day: Int, input: List<String>){
         printMenu(input)
-        printOrderDetail(day,input)
+        printTotalPrice(input)
+        printReward(input)
+        printEventDetail(day,input)
     }
     private fun printMenu(input: List<String>) {
         println("<주문 메뉴>")
@@ -24,7 +26,7 @@ class OutputView() {
         }
     }
 
-    private fun printOrderDetail(day: Int, input: List<String>){
+    private fun printEventDetail(day: Int, input: List<String>){
         val totalPrice = CalculateInOrder().TotalPriceInOrder(input)
 
         println("<혜택내역>")
@@ -33,6 +35,7 @@ class OutputView() {
         }else{
             println("없음")
         }
+        println()
     }
 
     private fun printApplyEvent(visitDay: Int, orderMenus: List<String>) {
@@ -52,6 +55,23 @@ class OutputView() {
         }
         println("특별 할인: -${specialEvent}원")
         println("증정 이벤트: -${rewardEvent}원")
+        println()
     }
-    // ...
+
+    private fun printTotalPrice(input: List<String>){
+        println("<할인 전 총주문 금액>")
+        println("${CalculateInOrder().TotalPriceInOrder(input)}원")
+        println()
+    }
+
+    private fun printReward(input: List<String>){
+        val rewardEvent = RewardEvent(input).applyRewardEvent()
+        println("<증정 메뉴>")
+        if (rewardEvent != 0){
+            println("샴페인 1개")
+        }else{
+            println("없음")
+        }
+        println()
+    }
 }
