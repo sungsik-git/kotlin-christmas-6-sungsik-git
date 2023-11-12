@@ -5,7 +5,7 @@ import transformation.DivideOrder
 
 class WeekdayEvent (day: String, input: List<String>){
     companion object{
-        val weekdays = listOf("SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY")
+        val weekdays = listOf("SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "CHRISTMAS")
     }
 
     private var onTarget = false

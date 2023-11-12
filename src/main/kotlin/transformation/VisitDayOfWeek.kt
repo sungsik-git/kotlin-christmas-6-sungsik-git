@@ -6,7 +6,7 @@ class VisitDayOfWeek(private val day: Int) {
                 1 -> "FRIDAY"
                 2 -> "SATURDAY"
                 3 -> "SUNDAY"
-                4 -> "MONDAY"
+                4 -> if(day == 25) "CHRISTMAS" else "MONDAY"
                 5 -> "TUESDAY"
                 6 -> "WEDNESDAY"
                 0 -> "THURSDAY"
