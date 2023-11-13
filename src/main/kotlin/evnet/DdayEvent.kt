@@ -11,7 +11,7 @@ class DdayEvent(private val day: Int, input: List<String>) {
 
     private var onTarget = false
     private var discount = 0
-    private var totalPrice = CalculateInOrder().TotalPriceInOrder(input)
+    private var totalPrice = CalculateInOrder().totalPriceInOrder(input)
 
         init {
             if (day >= 1 && day <= 25 && totalPrice > MINIMUM_ORDER_PRICE) onTarget = true

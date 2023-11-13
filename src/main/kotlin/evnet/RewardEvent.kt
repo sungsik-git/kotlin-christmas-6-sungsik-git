@@ -10,7 +10,7 @@ class RewardEvent (orderMenus: List<String>) {
     var onTarget = false
     var discount = 0
     init {
-        if(CalculateInOrder().TotalPriceInOrder(orderMenus) > MINIMUM_ORDER_PRICE) onTarget = true
+        if(CalculateInOrder().totalPriceInOrder(orderMenus) > MINIMUM_ORDER_PRICE) onTarget = true
     }
 
     fun applyRewardEvent() : Int{

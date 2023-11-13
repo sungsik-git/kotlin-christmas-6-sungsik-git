@@ -20,6 +20,9 @@ class OutputView(day: Int, input: List<String>) {
     val rewardEvent = RewardEvent(input).applyRewardEvent()
 
     init{
+        println("12월 ${day}일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!")
+        println()
+
         printMenu(input)
         printTotalPrice(input)
         printReward(input)
@@ -43,7 +46,7 @@ class OutputView(day: Int, input: List<String>) {
     private fun printEventDetail(input: List<String>) {
         val totalPrice = CalculateInOrder().totalPriceInOrder(input)
 
-        println("<혜택내역>")
+        println("<혜택 내역>")
         if(totalPrice >= 10000) {
             printApplyEvent()
         }else{
@@ -91,10 +94,13 @@ class OutputView(day: Int, input: List<String>) {
     private fun printFinalPrice(day: Int, input: List<String>){
         val totalPrice = CalculateInOrder().totalPriceInOrder(input)
         val totalDiscount = CalculateInOrder().totalDiscountInOrder(day, input)
-        val finalPrice = totalPrice - totalDiscount
+        var finalPrice = totalPrice - totalDiscount
+        if(rewardEvent > 0) {
+            finalPrice = totalPrice - totalDiscount + rewardEvent
+        }
 
         println("<할인 후 예상 결제 금액>")
-        println(finalPrice)
+        println("${finalPrice}원")
         println()
     }
 
