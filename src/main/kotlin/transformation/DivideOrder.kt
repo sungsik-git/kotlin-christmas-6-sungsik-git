@@ -1,5 +1,7 @@
 package transformation
 
+import userView.ErrorMessage
+
 class DivideOrder (private val input: List<String>) {
 
     fun getOrderMenuNames(): List<String>{
@@ -7,7 +9,13 @@ class DivideOrder (private val input: List<String>) {
     }
 
     fun getOrderMenuAmount(): List<Int> {
-        return input.map { it.split("-").last().toInt() }
+        return input.map {
+            try {
+                it.split("-").last().toInt()
+            } catch (e: NumberFormatException) {
+                throw IllegalArgumentException(ErrorMessage.INVALID_ORDER_MESSAGE.message, e)
+            }
+        }
     }
 
 
