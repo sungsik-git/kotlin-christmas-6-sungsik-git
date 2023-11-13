@@ -9,14 +9,15 @@ class InputView {
 
     fun readDate(): Int {
         var input = 0
-
         while (true) {
             println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.")
             println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)")
-            input = Console.readLine().toInt()
             try {
+                input = Console.readLine().toInt()
                 check.validateOfVisitDay(input)
                 break
+            } catch (e: NumberFormatException) {
+                println(ErrorMessage.INVALID_DATE_MESSAGE.message)
             } catch (e: IllegalArgumentException) {
                 println(e.message)
             }
