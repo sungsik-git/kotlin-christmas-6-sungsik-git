@@ -1,5 +1,6 @@
 package userView
 
+import evnet.BadgeEvent
 import evnet.DdayEvent
 import evnet.RewardEvent
 import evnet.SpecialEvent
@@ -9,13 +10,25 @@ import transformation.CalculateInOrder
 import transformation.DivideOrder
 import transformation.VisitDayOfWeek
 
-class OutputView() {
-    fun printAll(day: Int, input: List<String>){
+class OutputView(day: Int, input: List<String>) {
+
+    val dDayEvent = DdayEvent(day, input).applyDdayEvent()
+    val dayOfWeeks = VisitDayOfWeek(day).transformDayOfWeek()
+    val weekdayEvent = WeekdayEvent(dayOfWeeks, input).applyWeekdayEvent()
+    val weekendEvent = WeekendEvent(dayOfWeeks, input).applyWeekendEvent()
+    val specialEvent = SpecialEvent(dayOfWeeks).applySpecialEvent()
+    val rewardEvent = RewardEvent(input).applyRewardEvent()
+
+    init{
         printMenu(input)
         printTotalPrice(input)
         printReward(input)
-        printEventDetail(day,input)
+        printEventDetail(input)
+        printTotalDiscount(day,input)
+        printFinalPrice(day,input)
+        printBadgeEvent(day,input)
     }
+
     private fun printMenu(input: List<String>) {
         println("<주문 메뉴>")
         val orderNames = DivideOrder(input).getOrderMenuNames()
@@ -24,29 +37,22 @@ class OutputView() {
         for (index in 0 until orderAmounts.size){
             println("${orderNames[index]} ${orderAmounts[index]}개")
         }
+        println()
     }
 
-    private fun printEventDetail(day: Int, input: List<String>){
-        val totalPrice = CalculateInOrder().TotalPriceInOrder(input)
+    private fun printEventDetail(input: List<String>) {
+        val totalPrice = CalculateInOrder().totalPriceInOrder(input)
 
         println("<혜택내역>")
         if(totalPrice >= 10000) {
-            printApplyEvent(day, input)
+            printApplyEvent()
         }else{
             println("없음")
         }
         println()
     }
 
-    private fun printApplyEvent(visitDay: Int, orderMenus: List<String>) {
-
-        val dDayEvent = DdayEvent(visitDay, orderMenus).applyDdayEvent()
-        val dayOfWeeks = VisitDayOfWeek(visitDay).transformDayOfWeek()
-        val weekdayEvent = WeekdayEvent(dayOfWeeks, orderMenus).applyWeekdayEvent()
-        val weekendEvent = WeekendEvent(dayOfWeeks, orderMenus).applyWeekendEvent()
-        val specialEvent = SpecialEvent(dayOfWeeks).applySpecialEvent()
-        val rewardEvent = RewardEvent(orderMenus).applyRewardEvent()
-
+    private fun printApplyEvent() {
         println("크리스마스 디데이 할인: -${dDayEvent}원")
         if(dayOfWeeks == "FRIDAY" || dayOfWeeks == "SATURDAY" ){
             println("주말 할인: -${weekendEvent}원")
@@ -55,12 +61,11 @@ class OutputView() {
         }
         println("특별 할인: -${specialEvent}원")
         println("증정 이벤트: -${rewardEvent}원")
-        println()
     }
 
     private fun printTotalPrice(input: List<String>){
         println("<할인 전 총주문 금액>")
-        println("${CalculateInOrder().TotalPriceInOrder(input)}원")
+        println("${CalculateInOrder().totalPriceInOrder(input)}원")
         println()
     }
 
@@ -73,5 +78,31 @@ class OutputView() {
             println("없음")
         }
         println()
+    }
+
+    private fun printTotalDiscount(day: Int, input: List<String>){
+        var totalDiscountOrder = CalculateInOrder().totalDiscountInOrder(day,input)
+
+        println("<총혜택 금액>")
+        println("-${totalDiscountOrder}원")
+        println()
+    }
+
+    private fun printFinalPrice(day: Int, input: List<String>){
+        val totalPrice = CalculateInOrder().totalPriceInOrder(input)
+        val totalDiscount = CalculateInOrder().totalDiscountInOrder(day, input)
+        val finalPrice = totalPrice - totalDiscount
+
+        println("<할인 후 예상 결제 금액>")
+        println(finalPrice)
+        println()
+    }
+
+    private fun printBadgeEvent(day: Int, input: List<String>){
+        var totalDiscount = CalculateInOrder().totalDiscountInOrder(day, input)
+        var badge = BadgeEvent().applyBadgeEvent(totalDiscount)
+
+        println("<12월 이벤트 배지>")
+        println(badge)
     }
 }

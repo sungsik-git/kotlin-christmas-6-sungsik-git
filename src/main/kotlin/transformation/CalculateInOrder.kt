@@ -1,7 +1,13 @@
 package transformation
 
+import evnet.DdayEvent
+import evnet.RewardEvent
+import evnet.SpecialEvent
+import evnet.WeekdayEvent
+import evnet.WeekendEvent
+
 class CalculateInOrder {
-    fun TotalPriceInOrder(input: List<String>) : Int{
+    fun totalPriceInOrder(input: List<String>) : Int{
         val orderMenuAmount = DivideOrder(input).getOrderMenuAmount()
         val orderMenuNames = DivideOrder(input).getOrderMenuNames()
         val orderMenuPrices = ConversionByName().nameToPrice(orderMenuNames)
@@ -10,5 +16,16 @@ class CalculateInOrder {
             totalPrice += orderMenuAmount[index] * orderMenuPrices[index]
         }
         return totalPrice
+    }
+
+    fun totalDiscountInOrder(day: Int, input: List<String>) : Int{
+        val dDayEvent = DdayEvent(day, input).applyDdayEvent()
+        val dayOfWeeks = VisitDayOfWeek(day).transformDayOfWeek()
+        val weekdayEvent = WeekdayEvent(dayOfWeeks, input).applyWeekdayEvent()
+        val weekendEvent = WeekendEvent(dayOfWeeks, input).applyWeekendEvent()
+        val specialEvent = SpecialEvent(dayOfWeeks).applySpecialEvent()
+        val rewardEvent = RewardEvent(input).applyRewardEvent()
+        val totalDiscount = dDayEvent + weekdayEvent + weekendEvent + specialEvent + rewardEvent
+        return totalDiscount
     }
 }
