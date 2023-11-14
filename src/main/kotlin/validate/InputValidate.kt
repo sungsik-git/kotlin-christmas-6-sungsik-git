@@ -1,11 +1,16 @@
 package validate
 
+import transformation.CalculateInOrder
 import transformation.ConversionByName
 import transformation.DivideOrder
 import userView.ErrorMessage
 import userView.MenuName
 
 class InputValidate {
+    companion object{
+        const val MAX_VOLUME_ONE_ORDER = 20
+        const val NONE_ORDER_VOLUME = 1
+    }
 
     fun validateOfVisitDay(input: Int) {
         checkVisitDayRange(input)
@@ -17,6 +22,7 @@ class InputValidate {
         checkSameMenuName(input)
         checkOrderMenuFormat(input)
         checkOrderCategoryOnlyDrink(input)
+        checkOrderAmountUnder20(input)
     }
 
     private fun checkVisitDayRange(input: Int) {
@@ -54,7 +60,7 @@ class InputValidate {
         val orderMenuAmounts = DivideOrder(input).getOrderMenuAmount()
 
         for (orderMenuAmount in orderMenuAmounts) {
-            if (orderMenuAmount < 1)
+            if (orderMenuAmount < NONE_ORDER_VOLUME)
                 throw IllegalArgumentException(ErrorMessage.INVALID_ORDER_MESSAGE.message)
         }
     }
@@ -64,6 +70,18 @@ class InputValidate {
         var orderCategorys = ConversionByName().nameToCategory(orderMenuNames)
 
         if(orderCategorys.all { it == "DRINK" })
+            throw IllegalArgumentException(ErrorMessage.INVALID_ORDER_MESSAGE.message)
+    }
+
+    private fun checkOrderAmountUnder20(input: List<String>){
+        val orderMenuAmounts = DivideOrder(input).getOrderMenuAmount()
+        var totalAmount = 0
+
+        for (orderMenuAmount in orderMenuAmounts){
+            totalAmount += orderMenuAmount
+        }
+
+        if (totalAmount > MAX_VOLUME_ONE_ORDER)
             throw IllegalArgumentException(ErrorMessage.INVALID_ORDER_MESSAGE.message)
     }
 }
