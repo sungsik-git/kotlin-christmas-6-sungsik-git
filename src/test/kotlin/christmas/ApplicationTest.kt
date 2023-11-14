@@ -5,6 +5,7 @@ import camp.nextstep.edu.missionutils.test.NsTest
 import evnet.BadgeEvent
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import transformation.CalculateInOrder
 import userView.ErrorMessage
 
 
@@ -113,15 +114,56 @@ class ApplicationTest : NsTest() {
     fun `크리스마스가 지나면 디데이 이벤트가 적용되지 않음`(){
         assertSimpleTest {
             run("27", "해산물파스타-2,레드와인-1,초코케이크-1")
-            assertThat(output()).contains("<혜택 내역>$LINE_SEPARATOR".toString() + "크리스마스 디데이 할인: -0원")
+            assertThat(output()).contains("<혜택 내역>$LINE_SEPARATOR" + "크리스마스 디데이 할인: -0원")
         }
     }
 
-        @Test
+    @Test
     fun `총 주문 금액이 120000원 이상이면 샴페인을 증정`(){
         assertSimpleTest {
             run("3", "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1")
-            assertThat(output()).contains("<증정 메뉴>$LINE_SEPARATOR".toString() + "샴페인 1개")
+            assertThat(output()).contains("<증정 메뉴>$LINE_SEPARATOR" + "샴페인 1개")
+        }
+    }
+
+    @Test
+    fun `매주 일요일과 크리스마스 당일에 특별 이벤트가 적용`(){
+        assertSimpleTest {
+            run("25", "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1")
+            assertThat(output()).contains("특별 할인: -1000원")
+        }
+    }
+
+    @Test
+    fun `평일에 디저트 메뉴 1개당 2023원 할인 적용`(){
+        assertSimpleTest {
+            run("3", "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1")
+            assertThat(output()).contains("평일 할인: -4046원")
+        }
+    }
+
+    @Test
+    fun `주말에 메인 메뉴 1개당 2023원 할인 적용`(){
+        assertSimpleTest {
+            run("8", "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1")
+            assertThat(output()).contains("주말 할인: -4046원")
+        }
+    }
+
+    @Test
+    fun `샴페인을 증정 받았을 때 혜택금액에 샴페인 가격이 추가되고, 할인 후 결제 금액에서는 제외`(){
+        assertSimpleTest {
+            run("8", "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1")
+            var orderMenu = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1".split(",")
+            var totalDisCount = CalculateInOrder().totalDiscountInOrder(8,orderMenu)
+            var totalOrderPrice = CalculateInOrder().totalPriceInOrder(orderMenu)
+            var finalPrice = totalOrderPrice - totalDisCount
+            if (totalOrderPrice >= 120000){
+                finalPrice += 25000
+            }
+            assertThat(output()).contains("<증정 메뉴>$LINE_SEPARATOR" + "샴페인 1개")
+            assertThat(output()).contains("<총혜택 금액>$LINE_SEPARATOR" + "-${totalDisCount}원")
+            assertThat(output()).contains("<할인 후 예상 결제 금액>$LINE_SEPARATOR" + "${finalPrice}원")
         }
     }
 
@@ -130,6 +172,6 @@ class ApplicationTest : NsTest() {
     }
 
     companion object {
-        private val LINE_SEPARATOR = System.lineSeparator()
+        private val LINE_SEPARATOR = System.lineSeparator().toString()
     }
 }

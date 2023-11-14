@@ -2,10 +2,11 @@ package evnet
 
 class SpecialEvent(day: String) {
     companion object {
-        var specialDay = listOf("SUNDAY", "CHRISTMAS")
-    }
+        const val DISCOUNT_AMOUNT = 1000
 
-    var onTarget = false
+    }
+    private val specialDay = listOf("SUNDAY", "CHRISTMAS")
+    private var onTarget = false
 
     init {
         if (specialDay.contains(day)) onTarget = true
@@ -14,7 +15,7 @@ class SpecialEvent(day: String) {
     fun applySpecialEvent(): Int {
         var discount = 0
         if (onTarget) {
-            discount = 1000
+            discount = DISCOUNT_AMOUNT
         }
         return discount
     }
