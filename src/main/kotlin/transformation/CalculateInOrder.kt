@@ -18,14 +18,13 @@ class CalculateInOrder {
         return totalPrice
     }
 
-    fun totalDiscountInOrder(day: Int, input: List<String>) : Int{
+    fun totalDiscountInOrder(day: Int, input: List<String>): Int {
         val dDayEvent = DdayEvent(day, input).applyDdayEvent()
         val dayOfWeeks = VisitDayOfWeek(day).transformDayOfWeek()
         val weekdayEvent = WeekdayEvent(dayOfWeeks, input).applyWeekdayEvent()
         val weekendEvent = WeekendEvent(dayOfWeeks, input).applyWeekendEvent()
         val specialEvent = SpecialEvent(dayOfWeeks).applySpecialEvent()
         val rewardEvent = RewardEvent(input).applyRewardEvent()
-        val totalDiscount = dDayEvent + weekdayEvent + weekendEvent + specialEvent + rewardEvent
-        return totalDiscount
+        return dDayEvent + weekdayEvent + weekendEvent + specialEvent + rewardEvent
     }
 }

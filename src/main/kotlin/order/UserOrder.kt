@@ -4,7 +4,7 @@ import userView.InputView
 import userView.OutputView
 
 class UserOrder {
-    var inputView = InputView()
+    private var inputView = InputView()
     fun start(){
         var visitDay = inputView.readDate()
         var orderMenus = inputView.readMenu()

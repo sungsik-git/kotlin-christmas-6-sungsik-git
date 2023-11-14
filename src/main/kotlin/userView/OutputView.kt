@@ -12,12 +12,12 @@ import transformation.VisitDayOfWeek
 
 class OutputView(day: Int, input: List<String>) {
 
-    val dDayEvent = DdayEvent(day, input).applyDdayEvent()
-    val dayOfWeeks = VisitDayOfWeek(day).transformDayOfWeek()
-    val weekdayEvent = WeekdayEvent(dayOfWeeks, input).applyWeekdayEvent()
-    val weekendEvent = WeekendEvent(dayOfWeeks, input).applyWeekendEvent()
-    val specialEvent = SpecialEvent(dayOfWeeks).applySpecialEvent()
-    val rewardEvent = RewardEvent(input).applyRewardEvent()
+    private val dDayEvent = DdayEvent(day, input).applyDdayEvent()
+    private val dayOfWeeks = VisitDayOfWeek(day).transformDayOfWeek()
+    private val weekdayEvent = WeekdayEvent(dayOfWeeks, input).applyWeekdayEvent()
+    private val weekendEvent = WeekendEvent(dayOfWeeks, input).applyWeekendEvent()
+    private val specialEvent = SpecialEvent(dayOfWeeks).applySpecialEvent()
+    private val rewardEvent = RewardEvent(input).applyRewardEvent()
 
     init{
         println("12월 ${day}일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!")
