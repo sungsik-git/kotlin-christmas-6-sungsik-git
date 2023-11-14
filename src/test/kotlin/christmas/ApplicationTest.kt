@@ -87,7 +87,7 @@ class ApplicationTest : NsTest() {
             assertThat(output()).contains(ErrorMessage.INVALID_ORDER_MESSAGE.message)
         }
     }
-    
+
 
     override fun runMain() {
         main()

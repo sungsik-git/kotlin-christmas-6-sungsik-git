@@ -7,12 +7,10 @@ class BadgeEvent {
         const val MAXIMUM_DISCOUNT = 20000
     }
 
-    var badge = ""
-
     fun applyBadgeEvent(discount: Int): String {
-        badge = when {
-            MINIMUM_DISCOUNT <= discount && discount < MIDDLE_DISCOUNT -> "별"
-            MIDDLE_DISCOUNT <= discount && discount < MAXIMUM_DISCOUNT -> "트리"
+        var badge = when {
+            discount in MINIMUM_DISCOUNT..<MIDDLE_DISCOUNT -> "별"
+            discount in MIDDLE_DISCOUNT..<MAXIMUM_DISCOUNT -> "트리"
             MAXIMUM_DISCOUNT < discount -> "산타"
             else -> "없음"
         }
