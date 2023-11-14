@@ -47,6 +47,14 @@ class ApplicationTest : NsTest() {
         }
     }
 
+    @Test
+    fun `방문 날짜가 1~31일 사이의 값이 아닐 경우 예외 발생`(){
+        assertSimpleTest {
+            runException("32")
+            assertThat(output()).contains("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.")
+        }
+    }
+
     override fun runMain() {
         main()
     }
