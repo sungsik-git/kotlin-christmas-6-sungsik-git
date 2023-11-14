@@ -101,6 +101,23 @@ class ApplicationTest : NsTest() {
         }
     }
 
+    @Test
+    fun `디데이 이벤트 출력`() {
+        assertSimpleTest {
+            run("25", "해산물파스타-2,레드와인-1,초코케이크-1")
+            assertThat(output()).contains("<혜택 내역>$LINE_SEPARATOR".toString() + "크리스마스 디데이 할인: -3400원")
+        }
+    }
+
+    @Test
+    fun `크리스마스가 지나면 디데이 이벤트가 적용되지 않음`(){
+        assertSimpleTest {
+            run("27", "해산물파스타-2,레드와인-1,초코케이크-1")
+            assertThat(output()).contains("<혜택 내역>$LINE_SEPARATOR".toString() + "크리스마스 디데이 할인: -0원")
+        }
+    }
+
+    
     override fun runMain() {
         main()
     }

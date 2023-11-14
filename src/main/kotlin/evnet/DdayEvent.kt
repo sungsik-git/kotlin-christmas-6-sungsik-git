@@ -2,7 +2,7 @@ package evnet
 
 import transformation.CalculateInOrder
 
-class DdayEvent(private val day: Int, input: List<String>) {
+class DdayEvent(private val visitDay: Int, input: List<String>) {
     companion object {
         const val DEFAULT_DISCOUNT: Int = 1000
         const val DAILY_ADDITIONAL_DISCOUNT: Int = 100
@@ -14,12 +14,12 @@ class DdayEvent(private val day: Int, input: List<String>) {
     private var totalPrice = CalculateInOrder().totalPriceInOrder(input)
 
         init {
-            if (day >= 1 && day <= 25 && totalPrice > MINIMUM_ORDER_PRICE) onTarget = true
+            if (visitDay in 1..25 && totalPrice > MINIMUM_ORDER_PRICE) onTarget = true
         }
 
     fun applyDdayEvent(): Int {
         if (onTarget) {
-            discount += DEFAULT_DISCOUNT + ((day - 1) * DAILY_ADDITIONAL_DISCOUNT)
+            discount += DEFAULT_DISCOUNT + ((visitDay - 1) * DAILY_ADDITIONAL_DISCOUNT)
         }
         return discount
     }
