@@ -10,6 +10,8 @@ class InputValidate {
     companion object{
         const val MAX_VOLUME_ONE_ORDER = 20
         const val NONE_ORDER_VOLUME = 1
+        const val FIRST_DAY_OF_DECEMBER = 1
+        const val LAST_DAY_OF_DECEMBER = 31
     }
 
     fun validateOfVisitDay(input: Int) {
@@ -26,7 +28,7 @@ class InputValidate {
     }
 
     private fun checkVisitDayRange(input: Int) {
-        if (input < 1 || input > 31)
+        if (input < FIRST_DAY_OF_DECEMBER || input > LAST_DAY_OF_DECEMBER)
             throw IllegalArgumentException(ErrorMessage.INVALID_DATE_MESSAGE.message)
     }
 

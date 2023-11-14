@@ -4,6 +4,7 @@ import camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest
 import camp.nextstep.edu.missionutils.test.NsTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import userView.ErrorMessage
 
 
 class ApplicationTest : NsTest() {
@@ -51,9 +52,42 @@ class ApplicationTest : NsTest() {
     fun `방문 날짜가 1~31일 사이의 값이 아닐 경우 예외 발생`(){
         assertSimpleTest {
             runException("32")
-            assertThat(output()).contains("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.")
+            assertThat(output()).contains(ErrorMessage.INVALID_DATE_MESSAGE.message)
         }
     }
+
+    @Test
+    fun `메뉴에 없는 상품을 주문할 경우 예외 발생`(){
+        assertSimpleTest {
+            runException("13", "치킨-2,피자-1")
+            assertThat(output()).contains(ErrorMessage.INVALID_ORDER_MESSAGE.message)
+        }
+    }
+
+    @Test
+    fun `메뉴를 20개 이상 주문 할 경우 예외 발생`(){
+        assertSimpleTest {
+            runException("13", "타파스-11,제로콜라-10")
+            assertThat(output()).contains(ErrorMessage.INVALID_ORDER_MESSAGE.message)
+        }
+    }
+
+    @Test
+    fun `메뉴를 1개도 주문하지 않을 경우 예외 발생`(){
+        assertSimpleTest {
+            runException("13", "타파스-0")
+            assertThat(output()).contains(ErrorMessage.INVALID_ORDER_MESSAGE.message)
+        }
+    }
+
+    @Test
+    fun `음료 메뉴만 주문했을 때 예외 발생`(){
+        assertSimpleTest {
+            runException("13", "제로콜라-1")
+            assertThat(output()).contains(ErrorMessage.INVALID_ORDER_MESSAGE.message)
+        }
+    }
+    
 
     override fun runMain() {
         main()
