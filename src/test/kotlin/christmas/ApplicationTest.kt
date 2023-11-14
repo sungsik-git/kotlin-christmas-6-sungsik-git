@@ -117,7 +117,14 @@ class ApplicationTest : NsTest() {
         }
     }
 
-    
+        @Test
+    fun `총 주문 금액이 120000원 이상이면 샴페인을 증정`(){
+        assertSimpleTest {
+            run("3", "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1")
+            assertThat(output()).contains("<증정 메뉴>$LINE_SEPARATOR".toString() + "샴페인 1개")
+        }
+    }
+
     override fun runMain() {
         main()
     }

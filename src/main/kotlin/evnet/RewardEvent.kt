@@ -4,18 +4,22 @@ import transformation.CalculateInOrder
 
 class RewardEvent (orderMenus: List<String>) {
     companion object{
-        const val MINIMUM_ORDER_PRICE = 120000
+        const val MINIMUM_EVENT_PRICE = 120000
+        const val CHAMPAGNE_PRICE = 25000
     }
 
-    var onTarget = false
-    var discount = 0
+    private var onTarget = false
+    private var totalPrice = CalculateInOrder().totalPriceInOrder(orderMenus)
+
     init {
-        if(CalculateInOrder().totalPriceInOrder(orderMenus) > MINIMUM_ORDER_PRICE) onTarget = true
+        if(totalPrice > MINIMUM_EVENT_PRICE) onTarget = true
     }
 
     fun applyRewardEvent() : Int{
+        var discount = 0
+
         if(onTarget){
-            discount += 25000
+            discount += CHAMPAGNE_PRICE
         }
         return discount
     }
