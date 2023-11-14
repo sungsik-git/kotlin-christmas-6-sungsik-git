@@ -2,6 +2,7 @@ package christmas
 
 import camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest
 import camp.nextstep.edu.missionutils.test.NsTest
+import evnet.BadgeEvent
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import userView.ErrorMessage
@@ -88,6 +89,17 @@ class ApplicationTest : NsTest() {
         }
     }
 
+    @Test
+    fun `혜택 금액별 해당되는 뱃지 지급`(){
+        assertSimpleTest {
+            var badge = BadgeEvent().applyBadgeEvent(5000)
+            assertThat(badge).isEqualTo("별")
+            badge = BadgeEvent().applyBadgeEvent(10000)
+            assertThat(badge).isEqualTo("트리")
+            badge = BadgeEvent().applyBadgeEvent(20000)
+            assertThat(badge).isEqualTo("산타")
+        }
+    }
 
     override fun runMain() {
         main()

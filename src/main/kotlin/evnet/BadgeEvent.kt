@@ -11,7 +11,7 @@ class BadgeEvent {
         var badge = when {
             discount in MINIMUM_DISCOUNT..<MIDDLE_DISCOUNT -> "별"
             discount in MIDDLE_DISCOUNT..<MAXIMUM_DISCOUNT -> "트리"
-            MAXIMUM_DISCOUNT < discount -> "산타"
+            MAXIMUM_DISCOUNT <= discount -> "산타"
             else -> "없음"
         }
         return badge
